@@ -14,14 +14,31 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 
+/**
+ * Writes out MLS teams' rosters for each season, including players' minutes and
+ * goals scored among other things.
+ *
+ * @author Gautam Sarkar
+ * @version Sep 7, 2016
+ */
 public class MLSDirect
 {
+    /**
+     * Writes out the info to a csv file.
+     */
     static FileWriter writer = null;
 
 
+    /**
+     * Main method.
+     * 
+     * @param args
+     *            not used
+     * @throws Exception
+     */
     public static void main( String args[] ) throws Exception
     {
-        writer = new FileWriter( "Data.csv" );
+        writer = new FileWriter( "MLSSoccerSiteData.csv" );
         writer.write( "Team,Year,Player,POS,GP,GS,MINS,G,A,SHTS,SOG,GWG,PKG/A,HmG,RdG,G/90min,SC%" );
         writer.append( '\n' );
 
@@ -32,6 +49,12 @@ public class MLSDirect
     }
 
 
+    /**
+     * Scrapes data for the given season.
+     * 
+     * @param season
+     * @throws IOException
+     */
     public static void getData( int season ) throws IOException
     {
         List<Object[]> list = new ArrayList<Object[]>();
@@ -65,6 +88,13 @@ public class MLSDirect
     }
 
 
+    /**
+     * Scrapes the tables for a given team id, season, and page number
+     * @param team the team's name and id
+     * @param season the year
+     * @param time the number of times this method was accessed before
+     * @throws IOException
+     */
     public static void getNumPlayers( Object[] team, int season, int time ) throws IOException
     {
         String urlString = "http://www.mlssoccer.com/stats/season?franchise=" + team[1] + "&year=" + season
@@ -82,7 +112,6 @@ public class MLSDirect
         while ( ( inputLine = in.readLine() ) != null )
         {
             result += inputLine;
-            // System.out.println(inputLine);
         }
 
         Document doc = Jsoup.parse( result );
@@ -98,7 +127,7 @@ public class MLSDirect
                 if ( firstRow )
                 {
                     csvStr += tds.get( 0 ).text() + ",";
-                    System.out.println(tds.get( 0 ).attr( "a[href]" ));
+                    System.out.println( tds.get( 0 ).attr( "a[href]" ) );
                     for ( int cnt = 1; cnt < tds.size(); cnt++ )
                     {
                         csvStr += tds.get( cnt ).text() + ",";

@@ -20,7 +20,7 @@ import java.io.IOException;
  * @author Gautam Sarkar
  * @version Sep 7, 2016
  */
-public class Test
+public class TransfermarketMLS
 {
     /**
      * Stores data in ArrayList of Strings with key being team name,year.
