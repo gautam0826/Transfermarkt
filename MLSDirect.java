@@ -141,7 +141,7 @@ public class MLSDirect
                 }
             }
         }
-        System.out.println( team[0] + " " + season );
+        //System.out.println( team[0] + " " + season );
         Elements nextPage = doc.select( "a[title=Go to next page]" );
         if ( nextPage.size() > 0 )
         {
